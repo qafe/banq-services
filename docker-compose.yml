@@ -1,0 +1,27 @@
+---
+version: '2'
+services:
+    banq-proxy:
+        build: build-context/banq-proxy
+        image: qafe/banq-proxy
+        container_name: banq-proxy
+        restart: unless-stopped
+        environment:
+            - "HOSTNAME=${BANQ_PROXY_HOSTNAME}"
+        links:
+            - "banq-restapi"
+            - "banq-client-web"
+        ports:
+            - "80:80"
+            - "443:443"
+
+    banq-restapi:
+        image: qafe/banq-restapi
+        container_name: banq-restapi
+        restart: unless-stopped
+
+    banq-client-web:
+        image: qafe/banq-client-web
+        container_name: banq-client-web
+        restart: unless-stopped
+...
